@@ -1,3 +1,5 @@
+#imports
+
 from lib2to3.pgen2 import token
 import nltk
 nltk.download('punkt')
@@ -14,6 +16,7 @@ import plotly.express as px
 from nltk.stem import PorterStemmer, WordNetLemmatizer
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
+from nltk import word_tokenize
 import gensim
 from gensim.utils import simple_preprocess
 from gensim.parsing.preprocessing import STOPWORDS
@@ -23,6 +26,10 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten, Embedding, Input, LSTM, Conv1D, MaxPool1D, Bidirectional
 from tensorflow.keras.models import Model
+#import sklearn for splitting train and test data
+from sklearn.model_selection import train_test_split
+
+
 
 df_true=pd.read_csv("True.csv")
 df_fake=pd.read_csv("Fake.csv")
@@ -98,3 +105,20 @@ print("The max number of words in the doc is = ", maxlen)
 
 #fig=px.histogram(x=[len(nltk.word_tokenize(x)) for x in df.clean_joined],nbins=100)
 
+x_train,x_test,y_train,y_test=train_test_split(df.clean_joined,df.isFake,test_size=0.2)
+
+# Create a tokenizer to tokenize the strings into integers
+tokenizer = Tokenizer(num_words = total_words)
+tokenizer.fit_on_texts(x_train)
+train_sequences = tokenizer.texts_to_sequences(x_train)
+test_sequences = tokenizer.texts_to_sequences(x_test)
+
+print(len(train_sequences))
+print(len(test_sequences))
+
+#maxlen=4405 works well based off of experimentation. maxlen=40 also works well
+padded_train = pad_sequences(train_sequences,maxlen=4405,padding='post',truncating='post')
+padded_test = pad_sequences(test_sequences,maxlen=4405,truncating='post')
+
+for x,doc in enumerate(padded_train[:2]):
+    print("The padded encoding for docmument",x+1," is : ",doc)
