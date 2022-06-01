@@ -1,4 +1,4 @@
 # FakeNewsDetection
 #### NLP Fake news detection using LSTM model
-###### ![Image 1](github.com/arisharma43/FakeNewsDetection/blob/main/Images/Subjects.jpg)
-###### ![Image 2](github.com/arisharma43/FakeNewsDetection/blob/main/Images/Fake.jpg)
+###### ![Image 1](./Images/Fake.png)
+###### ![Image 2](./Images/Subjects.png)
