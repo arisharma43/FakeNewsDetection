@@ -70,3 +70,5 @@ for i in df.clean:
     for j in i:
         list_of_words.append(j)
 print(list_of_words)
+
+len(list_of_words)
