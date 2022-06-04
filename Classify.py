@@ -122,3 +122,18 @@ padded_test = pad_sequences(test_sequences,maxlen=4405,truncating='post')
 
 for x,doc in enumerate(padded_train[:2]):
     print("The padded encoding for docmument",x+1," is : ",doc)
+
+model = Sequential()
+
+#dimensionality reduction
+model.add(Embedding(total_words,output_dim=128))
+
+#Bi-directional RNN/LSTM
+model.add(Bidirectional(LSTM(128)))
+
+model.add(Dense(128,activation='relu'))
+
+#Unit=1 because binary classification, output should be 0 or 1 (false or true)
+model.add(Dense(1,activation='sigmoid'))
+model.compile(optimizer='adam',loss='binary_crossentropy',metrics=['acc'])
+model.summary()
