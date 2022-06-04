@@ -71,8 +71,8 @@ def preprocess(text):
     return result
 
 df['clean']=df['original'].apply(preprocess)
-print(df['original'][2])
-print(df['clean'][2])
+# print(df['original'][2])
+# print(df['clean'][2])
 
 #find total words
 list_of_words = []
@@ -113,8 +113,8 @@ tokenizer.fit_on_texts(x_train)
 train_sequences = tokenizer.texts_to_sequences(x_train)
 test_sequences = tokenizer.texts_to_sequences(x_test)
 
-print(len(train_sequences))
-print(len(test_sequences))
+# print(len(train_sequences))
+# print(len(test_sequences))
 
 #maxlen=4405 works well based off of experimentation. maxlen=40 also works well
 padded_train = pad_sequences(train_sequences,maxlen=4405,padding='post',truncating='post')
@@ -137,3 +137,8 @@ model.add(Dense(128,activation='relu'))
 model.add(Dense(1,activation='sigmoid'))
 model.compile(optimizer='adam',loss='binary_crossentropy',metrics=['acc'])
 model.summary()
+
+y_train=np.asarray(y_train)
+
+#train
+model.fit(padded_train,y_train,batch_size=64,validation_split=0.1,epochs=2)
