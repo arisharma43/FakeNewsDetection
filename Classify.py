@@ -28,6 +28,7 @@ from tensorflow.keras.layers import Dense, Flatten, Embedding, Input, LSTM, Conv
 from tensorflow.keras.models import Model
 #import sklearn for splitting train and test data
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score,confusion_matrix
 
 
 
@@ -142,3 +143,21 @@ y_train=np.asarray(y_train)
 
 #train
 model.fit(padded_train,y_train,batch_size=64,validation_split=0.1,epochs=2)
+
+
+#Evaluate performance
+pred=model.predict(padded_test)
+
+prediction=[]
+for i in range(len(pred)):
+    if pred[i].item()>0.5:
+        prediction.append(1)
+    else:
+        prediction.append(0)
+
+print("Accuracy: ",accuracy_score(list(y_test),prediction))
+
+CM=confusion_matrix(list(y_test),prediction)
+plt.figure(figsize=(25,25))
+sns.heatmap(CM,annot=True)
+
