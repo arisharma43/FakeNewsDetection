@@ -1,5 +1,5 @@
 # FakeNewsDetection
-#### NLP Fake news detection using LSTM model
+#### NLP Fake news detection using Long Short Term Model (LSTM)
 ###### ![Image 1](./Images/Subjects.png)
 ###### ![Image 2](./Images/Fake.png )
 
